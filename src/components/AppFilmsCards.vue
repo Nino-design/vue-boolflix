@@ -1,10 +1,29 @@
 <template>
   <div class="card-wrapper m-3 text-center">
-    <h3 class="fw-bold mt-2 mb-2">{{ movie.title ? movie.title : movie.name }}</h3>
-    <h5 class="m-0">{{ movie.original_title ? movie.original_title : movie.original_name }}</h5>
-    <img v-if="haveImage" class="flag" :src="require(`../assets/img/${movie.original_language}.png`)" alt="">
+    <img
+      class="poster"
+      v-if="movie.poster_path"
+      :src="`http://image.tmdb.org/t/p/w300/${movie.poster_path}`"
+      alt=""
+    />
+    <img v-else src="../assets/img/no-image-available-icon-flat-vector-no-image-available-icon.jpg" alt="" />
+    <h3 class="fw-bold mt-2 mb-2">
+      {{ movie.title ? movie.title : movie.name }}
+    </h3>
+    <h5 class="m-0">
+      {{ movie.original_title ? movie.original_title : movie.original_name }}
+    </h5>
+    <img
+      v-if="haveImage"
+      class="flag"
+      :src="require(`../assets/img/${movie.original_language}.png`)"
+      alt=""
+    />
     <p v-else>{{ movie.original_language }}</p>
     <p>Voto: {{ movie.vote_average }}</p>
+    <div class="stars">
+     <span> <i v-for="element in 5" :key="element" class="fa fa-star" :class="element <= voteStars ? 'fas' : 'far'"></i></span>
+    </div>
   </div>
 </template>
 
@@ -16,14 +35,17 @@ export default {
   },
   data() {
     return {
-      flags: ['de', 'en', 'es', 'fr', 'it'],
+      flags: ["de", "en", "es", "fr", "it"],
+    };
+  },
+  computed: {
+    haveImage: function () {
+      return this.flags.includes(this.movie.original_language);
+    },
+    voteStars: function () { 
+      return Math.ceil(this.movie.vote_average / 2);
     }
   },
-  methods: {
-    haveImage: function () { 
-      return this.flags.includes(this.movie.original_language);
-    }
-  }
 };
 </script>
 
@@ -34,7 +56,12 @@ export default {
   color: white;
 }
 
-.flag{ 
-  width: 20%;
+.flag {
+  width: 15%;
+}
+
+.stars span{ 
+  color: yellow;
+  font-size: 2em;
 }
 </style>
