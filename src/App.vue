@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <AppHeader @userSearch="findMovie($event)"/>
+    <AppHeader @userSearch="findMovie($event)" />
     <main>
-      <AppMain :films="filmsArray"/>
+      <AppMain :films="filmsArray" :series="seriesArray" />
     </main>
   </div>
 </template>
@@ -21,18 +21,29 @@ export default {
   data() {
     return {
       filmsArray: [],
-    }
+      seriesArray: [],
+    };
   },
-  methods: { 
-    findMovie: function (movieKey) {
+  methods: {
+    findMovie: function (elementKey) {
       axios
-      .get("https://api.themoviedb.org/3/search/movie?api_key=f529d351b2c225b3c812601da9044977&query=" + movieKey)
-      .then((resp) => {
-        console.log(resp);
-        this.filmsArray = resp.data.results;
-      });
-    }
-  }
+        .get(
+          "https://api.themoviedb.org/3/search/movie?api_key=f529d351b2c225b3c812601da9044977&query=" +
+            elementKey
+        )
+        .then((resp) => {
+          this.filmsArray = resp.data.results;
+        });
+      axios
+        .get(
+          "https://api.themoviedb.org/3/search/tv?api_key=f529d351b2c225b3c812601da9044977&query=" +
+            elementKey
+        )
+        .then((resp) => {
+          this.seriesArray = resp.data.results;
+        });
+    },
+  },
 };
 </script>
 
