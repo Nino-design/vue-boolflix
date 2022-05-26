@@ -40,6 +40,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container{
+    transform-style: preserve-3d;
+}
+
+
 section {
   height: 100%;
   overflow: hidden;
