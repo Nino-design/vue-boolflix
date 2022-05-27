@@ -1,19 +1,24 @@
 <template>
+  <!--STRUTTURA CARDS-->
   <div class="card-wrapper m-3 text-center">
     <div class="card-content">
       <div class="card-front">
+        <!--AGGIUNTA DINAMICA POSTERS-->
         <img
           class="poster"
           v-if="movie.poster_path"
           :src="`http://image.tmdb.org/t/p/w300/${movie.poster_path}`"
           alt=""
         />
+        <!--AGGIUNTA IMMAGINE NO POSTER-->
         <img
           v-else
+          class="no-image"
           src="../assets/img/no-image-available-icon-flat-vector-no-image-available-icon.jpg"
           alt=""
         />
       </div>
+      <!--DISCRIMINARE SERIE DA FILMS-->
       <dir class="card-back">
         <h3 class="fw-bold fs-4">
           {{ movie.title ? movie.title : movie.name }}
@@ -23,16 +28,19 @@
             movie.original_title ? movie.original_title : movie.original_name
           }}
         </h5>
+        <!--AGGIUNTA BANDIERA-->
         <img
           v-if="haveImage"
           class="flag"
           :src="require(`../assets/img/${movie.original_language}.png`)"
           alt=""
         />
+        <!--AGGINTA LINGUA SE NON C'E' BANDIERA E VOTO-->
         <p v-else>{{ movie.original_language }}</p>
         <p>Voto: {{ movie.vote_average }}</p>
         <div class="stars">
           <span>
+            <!--CREAZIONE STELLE PER VOTO-->
             <i
               v-for="element in 5"
               :key="element"
@@ -57,6 +65,7 @@ export default {
       flags: ["de", "en", "es", "fr", "it"],
     };
   },
+  /*FUNZIONI LINGUA E VOTO*/
   computed: {
     haveImage: function () {
       return this.flags.includes(this.movie.original_language);
@@ -69,6 +78,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/*STRUUTURA CARDS*/
 .card-wrapper {
   width: calc(100% / 6 - 6px);
   height: 300px;
@@ -102,13 +112,18 @@ export default {
   background-color: black;
   backface-visibility: hidden;
 }
-
+/*EFFETTO HOVER*/
 .card-content:hover {
   transform: rotateY(180deg);
 }
 
 .poster img {
   object-fit: cover;
+}
+
+.no-image {
+  object-fit: fill;
+  height: 270px;
 }
 .flag {
   width: 15%;

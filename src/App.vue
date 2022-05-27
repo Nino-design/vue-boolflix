@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!--COLLEGAMENTO DATI IMMESSI NEEL BARRA DI RICERCA-->
     <AppHeader @userSearch="findMovie($event)" />
     <main>
       <AppMain :films="filmsArray" :series="seriesArray" />
@@ -24,6 +25,7 @@ export default {
       seriesArray: [],
     };
   },
+  /*RICHIESTA ARRAY OGGETTI DA SERVER*/
   methods: {
     findMovie: function (elementKey) {
       axios

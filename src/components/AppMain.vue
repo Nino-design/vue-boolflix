@@ -1,4 +1,5 @@
 <template>
+  <!--SEZIONE CARDS-->
   <section>
     <div
       class="
@@ -11,11 +12,13 @@
         mb-5
       "
     >
+      <!--AGGIUNTA DINAMICA FILMS -->
       <AppFilmsCards
         v-for="element in films"
         :key="element.id"
         :movie="element"
       />
+      <!--AGGIUNTA DINAMICA SERIE-->
       <AppFilmsCards
         v-for="element in series"
         :key="element.id"
@@ -40,10 +43,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container{
-    transform-style: preserve-3d;
+/*STILIZZAZIONE SEZIONE CARDS*/
+.container {
+  transform-style: preserve-3d;
 }
-
 
 section {
   height: 100%;
